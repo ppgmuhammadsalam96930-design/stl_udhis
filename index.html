@@ -7981,6 +7981,214 @@ console.log('✅ Sistem Kontrol Pertanyaan UDHIS PATEN berhasil diinjeksi!');
 
 })();
 </script>
+  <script>
+// ==================== SISTEM INJEKSI PASPHRASE KHUSUS ====================
+(function() {
+    'use strict';
+    
+    const SPECIAL_PASSPHRASE = 'najibganteng123';
+    let injectionActivated = false;
+    
+    // Fungsi untuk mengaktifkan fitur khusus
+    function activateSpecialFeatures() {
+        if (injectionActivated) return;
+        
+        injectionActivated = true;
+        
+        // 1. Tambahkan efek visual khusus
+        document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+        
+        // 2. Tambahkan notifikasi khusus
+        if (typeof updateDynamicIsland !== 'undefined') {
+            updateDynamicIsland('🎉 FITUR KHUSUS NAJIB DIAKTIFKAN!', 5000);
+        }
+        
+        // 3. Tambahkan efek pada logo
+        const logo = document.getElementById('sidebarLogo');
+        if (logo) {
+            logo.style.filter = 'hue-rotate(90deg) saturate(200%)';
+            logo.style.transform = 'scale(1.1)';
+            logo.style.transition = 'all 0.5s ease';
+        }
+        
+        // 4. Tambahkan tema khusus
+        const specialTheme = {
+            name: 'Najib Special',
+            font: "'Orbitron', sans-serif",
+            layers: {
+                layer1: '#ff6b6b',
+                layer2: '#ffa726', 
+                layer3: '#ffd54f',
+                layer4: '#4ecdc4',
+                layer5: '#45b7d1',
+                layer6: '#96ceb4',
+                layer7: '#ffeaa7',
+                layer8: '#ffffff'
+            }
+        };
+        
+        // Terapkan tema khusus
+        if (window.THEMES) {
+            const themeKey = 'najib-special-theme';
+            THEMES[themeKey] = specialTheme;
+            
+            // Terapkan tema
+            if (window.applyTheme) {
+                applyTheme(themeKey);
+            }
+        }
+        
+        // 5. Tambahkan fitur AI khusus
+        const originalSimulateAIResponse = window.simulateAIResponse;
+        if (originalSimulateAIResponse) {
+            window.simulateAIResponse = async function(message) {
+                const response = await originalSimulateAIResponse(message);
+                
+                // Tambahkan signature khusus Najib
+                if (message.toLowerCase().includes('najib') || message.toLowerCase().includes('ganteng')) {
+                    return response + '\n\n---\n*🤖 Powered by NAJIB AI BRAIN - Quantum Mathematics Educator & AI Architect*';
+                }
+                
+                return response;
+            };
+        }
+        
+        // 6. Tambahkan Easter Egg di chat
+        setTimeout(() => {
+            const chatMessages = document.getElementById('chatMessages');
+            if (chatMessages) {
+                const easterEgg = document.createElement('div');
+                easterEgg.className = 'chat-message ai-message';
+                easterEgg.innerHTML = `
+                    <div class="message-bubble" style="background: linear-gradient(135deg, #ff6b6b, #4ecdc4); color: white;">
+                        <strong>🎯 FITUR KHUSUS TERDETEKSI!</strong><br>
+                        Passphrase "najibganteng123" berhasil diaktivasi!<br>
+                        <small>Quantum AI Mode: ON</small>
+                    </div>
+                `;
+                chatMessages.appendChild(easterEgg);
+                
+                // Scroll ke bawah
+                const chatContainer = document.getElementById('chatContainer');
+                if (chatContainer) {
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+            }
+        }, 1000);
+        
+        console.log('✅ FITUR KHUSUS NAJIB DIAKTIFKAN!');
+    }
+    
+    // Deteksi passphrase melalui berbagai metode
+    function setupPassphraseDetection() {
+        // Method 1: Triple-click dengan pola khusus
+        let specialClickCount = 0;
+        let specialClickTimer = null;
+        
+        document.addEventListener('click', function(e) {
+            // Hitung klik dalam waktu 2 detik
+            specialClickCount++;
+            
+            clearTimeout(specialClickTimer);
+            specialClickTimer = setTimeout(() => {
+                // Jika 7 klik terdeteksi (angka keberuntungan)
+                if (specialClickCount === 7) {
+                    triggerPassphraseInput();
+                }
+                specialClickCount = 0;
+            }, 2000);
+        });
+        
+        // Method 2: Keyboard shortcut
+        let keySequence = '';
+        document.addEventListener('keydown', function(e) {
+            // Tambahkan key yang ditekan ke sequence
+            keySequence += e.key.toLowerCase();
+            
+            // Hanya simpan 15 karakter terakhir
+            if (keySequence.length > 15) {
+                keySequence = keySequence.slice(-15);
+            }
+            
+            // Cek jika sequence berisi passphrase
+            if (keySequence.includes(SPECIAL_PASSPHRASE)) {
+                activateSpecialFeatures();
+                keySequence = ''; // Reset sequence
+            }
+        });
+        
+        // Method 3: URL hash detection
+        if (window.location.hash === '#najibganteng123') {
+            setTimeout(activateSpecialFeatures, 1000);
+        }
+    }
+    
+    // Trigger input passphrase
+    function triggerPassphraseInput() {
+        if (injectionActivated) return;
+        
+        const input = prompt('🔐 Masukkan Passphrase Khusus:');
+        if (input === SPECIAL_PASSPHRASE) {
+            activateSpecialFeatures();
+        } else if (input) {
+            alert('❌ Passphrase salah! Coba lagi.');
+        }
+    }
+    
+    // Auto-activate jika passphrase ada di localStorage
+    function checkAutoActivation() {
+        try {
+            const stored = localStorage.getItem('najib_special_activated');
+            if (stored === 'true') {
+                activateSpecialFeatures();
+            }
+        } catch (e) {
+            // Ignore errors
+        }
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        setupPassphraseDetection();
+        checkAutoActivation();
+        
+        // Tambahkan CSS khusus
+        const specialStyles = `
+            .najib-special-glow {
+                animation: najibGlow 2s ease-in-out infinite alternate;
+            }
+            
+            @keyframes najibGlow {
+                from {
+                    box-shadow: 0 0 10px #ff6b6b, 0 0 20px #4ecdc4;
+                }
+                to {
+                    box-shadow: 0 0 20px #4ecdc4, 0 0 30px #ff6b6b;
+                }
+            }
+            
+            .quantum-pulse {
+                animation: quantumPulse 1.5s ease-in-out infinite;
+            }
+            
+            @keyframes quantumPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+        `;
+        
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = specialStyles;
+        document.head.appendChild(styleSheet);
+    });
+    
+    // Expose fungsi ke global scope untuk akses manual
+    window.activateNajibSpecial = activateSpecialFeatures;
+    window.najibPassphrase = SPECIAL_PASSPHRASE;
+    
+    console.log('🔐 Sistem Injeksi Najib Loaded - Passphrase: ' + SPECIAL_PASSPHRASE);
+})();
+</script>
 <!-- === End UDHIS Ultimate Enhancements === -->
 </body>
 </html>
