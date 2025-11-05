@@ -7819,6 +7819,149 @@ console.log('✅ Sistem Kontrol Pertanyaan UDHIS PATEN berhasil diinjeksi!');
     padding-bottom: 100px !important; /* Memberi ruang untuk footer */
 }
 </style>
+<script>
+// ==================== SWIPE GESTURE FOR RIGHT SIDEBAR ====================
+(function() {
+    'use strict';
+    
+    console.log('🔧 Injecting PROPER swipe gestures for RIGHT sidebar...');
+    
+    const SWIPE_CONFIG = {
+        threshold: 60,        // Minimum swipe distance
+        edgeThreshold: 50,    // Area from right edge to trigger open
+        allowedTime: 800,     // Max swipe duration
+        restraint: 100        // Max vertical deviation
+    };
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+
+    // Touch start - detect where swipe begins
+    document.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+    }, { passive: true });
+
+    // Touch end - process the swipe
+    document.addEventListener('touchend', function(e) {
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        
+        const deltaX = touchEndX - touchStartX; // Positive = right, Negative = left
+        const deltaY = Math.abs(touchEndY - touchStartY);
+        const elapsedTime = Date.now() - touchStartTime;
+        const screenWidth = window.innerWidth;
+        
+        const sidebar = document.getElementById('sidebar');
+        const isSidebarOpen = sidebar.classList.contains('active');
+
+        // Validate swipe
+        if (Math.abs(deltaX) < SWIPE_CONFIG.threshold || 
+            deltaY > SWIPE_CONFIG.restraint || 
+            elapsedTime > SWIPE_CONFIG.allowedTime) {
+            return;
+        }
+
+        console.log(`📱 Swipe detected: deltaX=${deltaX.toFixed(0)}, startX=${touchStartX}, screenWidth=${screenWidth}`);
+
+        // 🎯 LOGIC FOR RIGHT SIDEBAR:
+        
+        // 1. SWIPE LEFT FROM RIGHT EDGE TO OPEN
+        if (!isSidebarOpen && 
+            touchStartX > screenWidth - SWIPE_CONFIG.edgeThreshold && 
+            deltaX < -SWIPE_CONFIG.threshold) {
+            console.log('👈 Swipe LEFT from right edge - OPENING sidebar');
+            toggleSidebar();
+            showSwipeFeedback('← Buka Menu');
+            return;
+        }
+
+        // 2. SWIPE RIGHT ANYWHERE TO CLOSE (when sidebar is open)
+        if (isSidebarOpen && deltaX > SWIPE_CONFIG.threshold) {
+            console.log('👉 Swipe RIGHT - CLOSING sidebar');
+            toggleSidebar();
+            showSwipeFeedback('→ Tutup Menu');
+            return;
+        }
+
+    }, { passive: true });
+
+    // Enhanced overlay swipe (for closing)
+    const overlay = document.getElementById('sidebarOverlay');
+    if (overlay) {
+        overlay.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            touchStartTime = Date.now();
+        }, { passive: true });
+
+        overlay.addEventListener('touchend', function(e) {
+            if (!document.getElementById('sidebar').classList.contains('active')) return;
+            
+            const touchEndX = e.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            
+            // Swipe right on overlay to close
+            if (deltaX > SWIPE_CONFIG.threshold) {
+                console.log('👉 Swipe RIGHT on overlay - CLOSING sidebar');
+                toggleSidebar();
+                showSwipeFeedback('→ Tutup Menu');
+            }
+        }, { passive: true });
+    }
+
+    function showSwipeFeedback(message) {
+        let feedbackEl = document.getElementById('swipeFeedback');
+        if (!feedbackEl) {
+            feedbackEl = document.createElement('div');
+            feedbackEl.id = 'swipeFeedback';
+            feedbackEl.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.9);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 25px;
+                font-size: 14px;
+                font-weight: 600;
+                z-index: 10001;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255,255,255,0.2);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            `;
+            document.body.appendChild(feedbackEl);
+        }
+        
+        feedbackEl.textContent = message;
+        feedbackEl.style.opacity = '1';
+        
+        setTimeout(() => {
+            feedbackEl.style.opacity = '0';
+        }, 1000);
+    }
+
+    console.log('✅ PROPER right-sidebar swipe gestures injected');
+
+    // Debug info
+    setTimeout(() => {
+        const sidebar = document.getElementById('sidebar');
+        console.log('🎯 Sidebar Position:', {
+            exists: !!sidebar,
+            isActive: sidebar.classList.contains('active'),
+            screenWidth: window.innerWidth,
+            edgeThreshold: SWIPE_CONFIG.edgeThreshold
+        });
+    }, 500);
+
+})();
+</script>
 <!-- === End UDHIS Ultimate Enhancements === -->
 </body>
 </html>
