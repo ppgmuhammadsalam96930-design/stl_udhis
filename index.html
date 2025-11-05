@@ -7875,6 +7875,183 @@ console.log('✅ Sistem Kontrol Pertanyaan UDHIS PATEN berhasil diinjeksi!');
     window.addEventListener('resize', createFooter);
 })();
 </script>
+<script>
+(function() {
+    // Fungsi untuk membuat footer hak cipta dan menyesuaikan footer lainnya
+    function createCopyrightFooter() {
+        // Hapus footer hak cipta lama jika sudah ada (untuk prevent duplikasi)
+        const existingCopyrightFooter = document.getElementById('copyright-footer-shoes');
+        if (existingCopyrightFooter) {
+            existingCopyrightFooter.remove();
+        }
+        
+        // Hapus style lama jika ada
+        const existingStyle = document.getElementById('copyright-footer-style');
+        if (existingStyle) {
+            existingStyle.remove();
+        }
+        
+        // Buat footer hak cipta baru (sepatu) - di bagian paling bawah
+        const copyrightFooter = document.createElement('div');
+        copyrightFooter.id = 'copyright-footer-shoes';
+        copyrightFooter.innerHTML = `
+            <div class="copyright-shoes-content">
+                <p>© 2025 Muhammad Najib Wahidus Salam</p>
+                <p>"Dari guru SD, untuk guru, oleh guru, bagi guru."</p>
+                <p>Sidoarjo, 5 November 2025 — STL-UDHIS_Friends</p>
+                <p>Seluruh hak cipta dilindungi undang-undang.</p>
+            </div>
+        `;
+        
+        // Tambahkan style khusus untuk footer hak cipta
+        const style = document.createElement('style');
+        style.id = 'copyright-footer-style';
+        style.innerHTML = `
+            /* FOOTER HAK CIPTA (SEPATU) - DI BAWAH SEKALI */
+            #copyright-footer-shoes {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+                color: white;
+                text-align: center;
+                padding: 12px 10px;
+                font-size: 11px;
+                line-height: 1.4;
+                box-shadow: 0 -2px 15px rgba(0,0,0,0.3);
+                z-index: 10000;
+                border-top: 2px solid #ffd700;
+            }
+            
+            #copyright-footer-shoes .copyright-shoes-content {
+                max-width: 100%;
+                margin: 0 auto;
+            }
+            
+            #copyright-footer-shoes p {
+                margin: 2px 0;
+                text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+            }
+            
+            #copyright-footer-shoes p:first-child {
+                font-weight: bold;
+                font-size: 12px;
+            }
+            
+            #copyright-footer-shoes p:nth-child(2) {
+                font-style: italic;
+                color: #ffd700;
+            }
+            
+            /* ANIMASI HALUS SAAT MUNCUL */
+            @keyframes slideUpFooter {
+                from { transform: translateY(100%); }
+                to { transform: translateY(0); }
+            }
+            
+            #copyright-footer-shoes {
+                animation: slideUpFooter 0.5s ease-out;
+            }
+            
+            /* PENYESUAIAN UNTUK FOOTER LAIN - AGAR TERANGKAT */
+            body {
+                padding-bottom: 80px !important;
+            }
+            
+            /* PENYESUAIAN KHUSUS UNTUK SIDEBAR FOOTER - DIANGKAT LEBIH TINGGI */
+            .sidebar footer,
+            aside footer,
+            [class*="sidebar"] [class*="footer"],
+            .sidebar-footer {
+                margin-bottom: 30px !important;
+                transform: translateY(-15px) !important;
+                transition: all 0.3s ease !important;
+            }
+            
+            /* RESPONSIVE DESIGN */
+            @media (max-width: 768px) {
+                #copyright-footer-shoes {
+                    font-size: 10px;
+                    padding: 10px 8px;
+                }
+                
+                body {
+                    padding-bottom: 70px !important;
+                }
+                
+                .sidebar footer,
+                aside footer,
+                [class*="sidebar"] [class*="footer"],
+                .sidebar-footer {
+                    margin-bottom: 25px !important;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                #copyright-footer-shoes {
+                    font-size: 9px;
+                    padding: 8px 5px;
+                }
+                
+                #copyright-footer-shoes p:first-child {
+                    font-size: 10px;
+                }
+                
+                body {
+                    padding-bottom: 60px !important;
+                }
+                
+                .sidebar footer,
+                aside footer,
+                [class*="sidebar"] [class*="footer"],
+                .sidebar-footer {
+                    margin-bottom: 20px !important;
+                }
+            }
+        `;
+        
+        // Tambahkan style dan footer ke dokumen
+        document.head.appendChild(style);
+        document.body.appendChild(copyrightFooter);
+        
+        // Panggil fungsi untuk menyesuaikan footer sidebar
+        adjustSidebarFooters();
+    }
+    
+    // Fungsi untuk menyesuaikan footer sidebar
+    function adjustSidebarFooters() {
+        // Cari semua kemungkinan footer sidebar
+        const sidebarSelectors = [
+            '.sidebar footer',
+            'aside footer', 
+            '[class*="sidebar"] [class*="footer"]',
+            '.sidebar-footer'
+        ];
+        
+        sidebarSelectors.forEach(selector => {
+            const sidebarFooters = document.querySelectorAll(selector);
+            sidebarFooters.forEach(footer => {
+                footer.style.marginBottom = '30px';
+                footer.style.transform = 'translateY(-15px)';
+                footer.style.transition = 'all 0.3s ease';
+            });
+        });
+    }
+    
+    // Jalankan saat dokumen siap
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createCopyrightFooter);
+    } else {
+        createCopyrightFooter();
+    }
+    
+    // Jalankan juga saat ukuran window berubah
+    window.addEventListener('resize', function() {
+        setTimeout(createCopyrightFooter, 100);
+    });
+})();
+</script>
 <!-- === End UDHIS Ultimate Enhancements === -->
 </body>
 </html>
